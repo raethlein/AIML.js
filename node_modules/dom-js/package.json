@@ -1,0 +1,41 @@
+{
+  "name": "dom-js",
+  "version": "0.0.9",
+  "description": "XML DOM based on sax",
+  "dependencies": {
+    "sax": ">=0.1.5"
+  },
+  "directories": {
+    "lib": "./lib"
+  },
+  "main": "./lib/dom-js",
+  "engines": {
+    "node": "*"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/teknopaul/dom-js.git"
+  },
+  "author": {
+    "name": "teknopaul"
+  },
+  "contributors": [
+    {
+      "name": "Rafal Jonca"
+    },
+    {
+      "name": "Chanwit Kaewkasi"
+    }
+  ],
+  "readme": "# dom-js #\n\ndom-js is a node module that creates a DOM from a String using sax-js.\n\nDomJS has a parse() method  that takes a string and a callback which is used when the DOM is ready, or if there is an error.\n\nThe object returned contains the root Element parsed to JavaScript objects.\n\ndom-js returns the following object types\n\n* Element \n* Text\n* Comment\n* CDATASection\n* ProcessingInstruction (only contained in the root Element)\n\nAn Element has a name, a map of attributes, and an array of children, so you can find everything.\n\nYou get a couple of convenience methods on Element   text()  and  firstChild()  usage is hopefully obvious and save some boiler plate null checking.\n\nThe Element object has a method toXml() which returns a String with whitespace in tact.\n\nFor example \n\n    var util = require('util');\n    var DomJS = require(\"dom-js\").DomJS;\n\n    var domjs = new DomJS();\n\n    var string = '<xml><!-- the comment --><elem someAtt=\"fat &amp; red\">Hello &amp; World</elem></xml>';\n    domjs.parse(string, function(err, dom) {\n    \tconsole.log(util.inspect(dom, false, 23));\n    \tconsole.log(\"serializes to : \" + dom.toXml());\n    });\n\n\n## Examples\n\nThe /example/ folder in the npm package includes examples that console.log() the returned object.\n\n## Gotchas (that I can fix if it bothers anyone)\n\nAn empty tag <a></a>  will always be serialized in the short form <a/>.\n\nProcessingInstructions i.e. <?xml version=\"1.0\" encoding=\"UTF-8\"?>  are ignored and dropped by default, for backwards compatibility.\nIf you want to include processing instructions set the parseProcessingInstructions flag to true before calling parse().\n\n    var domjs = new DomJS();\n    domjs.parseProcessingInstructions = true;\n   \nThe first|root Element will contain an array called processingInstructions if the input document has any, otherwise processingInstructions is undefined.\nOutput of each processing instruction is always on a newline even if whitespace is different in the input document.\n\nSax strict parsing is on by default, and can be turned off by setting the strict flag.\n\n    var domjs = new DomJS();\n    domjs.strict = false;\n\nAn instance of DomJS should only be used once, but if you must reuse, call reset() before re-calling parse(). \nreset() does NOT reset the strict or processingInstructions flags.\n\n",
+  "readmeFilename": "README.md",
+  "bugs": {
+    "url": "https://github.com/teknopaul/dom-js/issues"
+  },
+  "_id": "dom-js@0.0.9",
+  "dist": {
+    "shasum": "427f508dfe4c8fdeefcb81a436fb201946fcc6ae"
+  },
+  "_from": "dom-js@~0.0.9",
+  "_resolved": "https://registry.npmjs.org/dom-js/-/dom-js-0.0.9.tgz"
+}
