@@ -37,7 +37,7 @@ aimlInterpreter.findAnswerInLoadedAIMLFiles('Test sr in random', callback);
 aimlInterpreter.findAnswerInLoadedAIMLFiles('Test the wildcard pattern!', callback);
 
 Supported AIML tags:
-<bot name='NAME'/>
+\<bot name='NAME'\/\>
 <get name='NAME'/>
 <set name='NAME'>TEXT</set>
 <random><li>A</li><li>B</li><li>C</li>…</random>
