@@ -1,0 +1,27 @@
+{
+  "name": "aimlinterpreter",
+  "version": "0.0.3",
+  "description": "Module to interpret AIML files in node.js",
+  "main": "AIMLInterpreter.js",
+  "dependencies": {
+    "dom-js": "~0.0.9"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/B3nRa/AIML.js.git"
+  },
+  "keywords": [
+    "aiml",
+    "ai",
+    "interpreter",
+    "bot"
+  ],
+  "author": "B3nRa",
+  "license": "BSD",
+  "bugs": {
+    "url": "https://github.com/B3nRa/AIML.js/issues"
+  }, "READ ME": "README.md"}
