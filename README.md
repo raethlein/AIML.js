@@ -21,8 +21,8 @@ Furthermore, the object has a function called <i>findAnswerInLoadedAIMLFiles(cli
 a message and a callback. The callback is called when an answer was found. 
 The callback of <i>findAnswerInLoadedAIMLFiles</i> should look like this: <i>callback(result, wildCardArray)</i>.
 Result is the <i>answer</i> from the AIML file and <i>wildCardArray</i> stores the values of all wildcardInputs passed previously from the client.	
-<br/><br/>
-<b>For example:</b><br/>
+<br/>
+<b>Example:</b><br/>
 <pre><code>
 AIMLInterpreter = require('./AIMLInterpreter');
 var aimlInterpreter = new AIMLInterpreter({name:'WireInterpreter', age:'42'});
@@ -35,19 +35,13 @@ var callback = function(answer, wildCardArray){
 aimlInterpreter.findAnswerInLoadedAIMLFiles('What is your name?', callback);
 aimlInterpreter.findAnswerInLoadedAIMLFiles('My name is Ben.', callback);
 aimlInterpreter.findAnswerInLoadedAIMLFiles('What is my name?', callback);
-aimlInterpreter.findAnswerInLoadedAIMLFiles('Who are you?', callback);
-aimlInterpreter.findAnswerInLoadedAIMLFiles('Give me a letter.', callback);
-aimlInterpreter.findAnswerInLoadedAIMLFiles('Test srai in random.', callback);
-aimlInterpreter.findAnswerInLoadedAIMLFiles('Test wildcard What is my name', callback);
-aimlInterpreter.findAnswerInLoadedAIMLFiles('Test sr tag', callback);
-aimlInterpreter.findAnswerInLoadedAIMLFiles('Test sr in random', callback);
-aimlInterpreter.findAnswerInLoadedAIMLFiles('Test the wildcard pattern!', callback);
-</code></pre>
+</code></pre><br/>
 <b>Supported AIML tags:</b><pre>
 &lt;bot name="<i>NAME</i>"/>
 &lt;get name="<i>NAME</i>"/>
 &lt;set name="<i>NAME</i>">TEXT&lt;/set>
 &lt;random>&lt;li><i>A</i>&lt;/li>&lt;li><i>B</i>&lt;/li>&lt;li><i>C</i>&lt;/li>&lt;/random>
 &lt;srai><i>PATTERN TEXT</i>&lt;/srai>
-&lt;sr/></pre>
+&lt;sr/>
+&lt;star/></pre>
 

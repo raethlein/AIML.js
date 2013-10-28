@@ -175,6 +175,10 @@ var findCorrectCategory = function(clientInput, domCategories){
                 text = resolveSpecialNodes(childNodesOfTemplate);
                 return text;
             }
+            else if(childNodesOfTemplate[i].name === 'star'){
+                text = resolveSpecialNodes(childNodesOfTemplate);
+                return text;
+            }
             else{
                 //this is the text of template node
                 //after all special functions (bot, get, set,...) were resolved
@@ -218,6 +222,7 @@ var findCorrectCategory = function(clientInput, domCategories){
             else if(innerNodes[i].name === 'sr'){
                 var result;
 
+                //for-loop to go through all loaded AIML files
                 for(var j = 0; j < domArray.length; j++){
                     result = findCorrectCategory(lastWildCardValue, domArray[j].children);
                     //if in one of the dom trees a matching pattern was found, exit this inner loop
@@ -226,6 +231,9 @@ var findCorrectCategory = function(clientInput, domCategories){
                         break;
                     }
                 }
+            }
+            else if(innerNodes[i].name === 'star'){
+                text = text + lastWildCardValue;
             }
             else{
                 //normal text (no special tag)
@@ -305,26 +313,27 @@ var getWildCardValue = function(userInput, patternText){
     var replaceArray = patternText.split('*');
     var wildCardInput = userInput;
 
-    //replace the string of the userInput which is fixed by the pattern
-    for(var i = 0; i < replaceArray.length; i++){
-        wildCardInput = wildCardInput.replace(replaceArray[i], '|');
-    }
-    //split the wildCardInput string by | to differentiate multiple * inputs
-    //e.g. userInput = WHAT IS THE RELATION BETWEEN TIM AND STRUPPI?
-    //-> | TIM | STRUPPI
-    //-> [TIM, STRUPPI]
-    wildCardInput = wildCardInput.split('|');
-    //split function can create an array which also includes spaces etc. -> e.g. [TIM, " ", "", STRUPPI, " "]
-    //we just want the information
+    if(replaceArray.length > 1){
+        //replace the string of the userInput which is fixed by the pattern
+        for(var i = 0; i < replaceArray.length; i++){
+            wildCardInput = wildCardInput.replace(replaceArray[i], '|');
+        }
+        //split the wildCardInput string by | to differentiate multiple * inputs
+        //e.g. userInput = WHAT IS THE RELATION BETWEEN TIM AND STRUPPI?
+        //-> | TIM | STRUPPI
+        //-> [TIM, STRUPPI]
+        wildCardInput = wildCardInput.split('|');
+        //split function can create an array which also includes spaces etc. -> e.g. [TIM, " ", "", STRUPPI, " "]
+        //we just want the information
+        var wildCardArrayIndex = 0;
+        for(var i = 0; i < wildCardInput.length; i++){
+            if(wildCardInput[i] != '' && wildCardInput[i] != ' ' && wildCardInput != undefined){
+                wildCardArray[wildCardArrayIndex] = wildCardInput[i];
+                wildCardArrayIndex++;
 
-    var wildCardArrayIndex = 0;
-    for(var i = 0; i < wildCardInput.length; i++){
-        if(wildCardInput[i] != '' && wildCardInput[i] != ' ' && wildCardInput != undefined){
-            wildCardArray[wildCardArrayIndex] = wildCardInput[i];
-            wildCardArrayIndex++;
-
-            if(!wildCardInput[i+1]){
-                lastWildCardValue = wildCardArray[wildCardArrayIndex-1];
+                if(!wildCardInput[i+1]){
+                    lastWildCardValue = wildCardArray[wildCardArrayIndex-1];
+                }
             }
         }
     }

@@ -9,5 +9,6 @@
 	<category><pattern>TEST WILDCARD *</pattern><template>Thanks for testing!</template></category>
 	<category><pattern>TEST SR TAG</pattern><template><sr/></template></category>
 	<category><pattern>TEST SR IN RANDOM</pattern><template><random><li><sr/></li></random></template></category>
-	<category><pattern>*</pattern><template>I found nothing.</template></category>
+    <category><pattern>TEST THE STAR TAG</pattern><template><star/></template></category>
+    <category><pattern>*</pattern><template>I found nothing.</template></category>
 </aiml>
