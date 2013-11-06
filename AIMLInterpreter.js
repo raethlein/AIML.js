@@ -13,6 +13,8 @@ var domIndex = 0;
 var isAIMLFileLoadingStarted = false;
 var isAIMLFileLoaded = false;
 
+var previousAnswer = '';
+
 //botAttributes contain things like name, age, master, gender...
 var AIMLInterpreter = function(botAttributesParam){
     var self = this;
@@ -64,6 +66,10 @@ var AIMLInterpreter = function(botAttributesParam){
                     break;
                 }
             }
+
+            if(result){
+                previousAnswer = result;
+            }
             cb(result, wildCardArray);
         }
         else{
@@ -91,18 +97,39 @@ var findCorrectCategory = function(clientInput, domCategories){
                 //check if the input of the user matches the pattern text
                 var matches = checkIfMessageMatchesPattern(clientInput, text);
                 if(matches){
-                    var text = findFinalTextInTemplateNode(categories[i].children);
-                    if(text){
-                        return text;
+                    //check if a 'that' tag is existing. If yes, check if the text of the that tag matches the previous given answer.
+                    //If it does not match, continue the traversion through the AIML file
+                    var isMatchingThat = checkForThatMatching(categories[i].children);
+                    if(isMatchingThat){
+                        var text = findFinalTextInTemplateNode(categories[i].children);
+                        if(text){
+                            return text;
+                        }
+                        break;
                     }
-                    break;
                 }
             }
-            if(categories[i].name === 'pattern'){
+            else if(categories[i].name === 'pattern'){
                 var text = resolveChildNodesInPatternNode(categories[i].children);
                 return text;
             }
         }
+    }
+
+    var checkForThatMatching = function(categoryChildNodes){
+        for(var i = 0; i < categoryChildNodes.length; i++){
+            if(categoryChildNodes[i].name === 'that'){
+                //if the previous answer of the bot does not match the that-tag text, then return undefined!
+                if(categoryChildNodes[i].children[0].text != previousAnswer){
+                    return false;
+                }
+                else{
+                    return true;
+                }
+            }
+        }
+        //if no that tag was found, everything 'fits'
+        return true;
     }
 
     var resolveChildNodesInPatternNode = function(patternChildNodes){
@@ -178,6 +205,9 @@ var findCorrectCategory = function(clientInput, domCategories){
             else if(childNodesOfTemplate[i].name === 'star'){
                 text = resolveSpecialNodes(childNodesOfTemplate);
                 return text;
+            }
+            else if(childNodesOfTemplate[i].name === 'that'){
+
             }
             else{
                 //this is the text of template node

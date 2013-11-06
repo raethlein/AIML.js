@@ -17,4 +17,7 @@ aimlInterpreter.findAnswerInLoadedAIMLFiles('Test wildcard What is my name?', ca
 aimlInterpreter.findAnswerInLoadedAIMLFiles('Test sr tag', callback);
 aimlInterpreter.findAnswerInLoadedAIMLFiles('Test sr in random', callback);
 aimlInterpreter.findAnswerInLoadedAIMLFiles('Test the star tag', callback);
+aimlInterpreter.findAnswerInLoadedAIMLFiles('Test the that tag', callback)
+aimlInterpreter.findAnswerInLoadedAIMLFiles('Test that-tag. match',callback);
+aimlInterpreter.findAnswerInLoadedAIMLFiles('Test that-tag. dont match', callback);
 aimlInterpreter.findAnswerInLoadedAIMLFiles('Test the wildcard pattern!', callback);
