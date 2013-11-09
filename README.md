@@ -43,5 +43,6 @@ aimlInterpreter.findAnswerInLoadedAIMLFiles('What is my name?', callback);
 &lt;random>&lt;li><i>A</i>&lt;/li>&lt;li><i>B</i>&lt;/li>&lt;li><i>C</i>&lt;/li>&lt;/random>
 &lt;srai><i>PATTERN TEXT</i>&lt;/srai>
 &lt;sr/>
-&lt;star/></pre>
+&lt;star/>
+&lt;that><i>NAME</i>&lt;/that></pre>
 
