@@ -172,7 +172,9 @@ var findCorrectCategory = function(clientInput, domCategories){
             }
             else if(childNodesOfTemplate[i].name === 'srai'){
                 //take pattern text of srai node to get answer of another category
-                var referredPatternText = childNodesOfTemplate[i].children[0].text;
+                var sraiText = '' + childNodesOfTemplate[i].children[0].text;
+                sraiText = sraiText.toUpperCase();
+                var referredPatternText = sraiText;
                 //call findCorrectCategory again to find the category that belongs to the srai node
                 var text = findCorrectCategory(referredPatternText, domCategories);
                 return text;
@@ -358,7 +360,35 @@ var getWildCardValue = function(userInput, patternText){
         var wildCardArrayIndex = 0;
         for(var i = 0; i < wildCardInput.length; i++){
             if(wildCardInput[i] != '' && wildCardInput[i] != ' ' && wildCardInput != undefined){
-                wildCardArray[wildCardArrayIndex] = wildCardInput[i];
+                var wildCard = wildCardInput[i];
+                var wildCardLastCharIndex = wildCard.length - 1;
+                var firstCharOfWildCard = wildCard.charAt(0);
+                var lastCharOfWildCard = wildCard.charAt(wildCardLastCharIndex);
+
+                try{
+                   //harmonize the wildcard string
+                   //remove first char if it is a space.
+                   //calculate the last index again since the length of the string changed
+                    if(firstCharOfWildCard === ' '){
+                        wildCard = wildCard.splice(0);
+                        wildCardLastCharIndex = wildCard.length - 1;
+                        lastCharOfWildCard = wildCard.charAt(wildCardLastCharIndex);
+                    }
+                    //if the last char is a space, remove it
+                    //calculate the last index again since the length of the string changed
+                    if(lastCharOfWildCard === ' '){
+                        wildCard = wildCard.substr(0, wildCardLastCharIndex);
+                        wildCardLastCharIndex = wildCard.length - 1;
+                        lastCharOfWildCard = wildCard.charAt(wildCardLastCharIndex);
+                    }
+                    if(lastCharOfWildCard === '?'){
+                        wildCard = wildCard.substr(0, wildCardLastCharIndex);
+                    }
+                }
+                catch(e){
+
+                }
+                wildCardArray[wildCardArrayIndex] = wildCard;
                 wildCardArrayIndex++;
 
                 if(!wildCardInput[i+1]){
