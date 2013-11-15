@@ -21,7 +21,7 @@ Furthermore, the object has a function called <i>findAnswerInLoadedAIMLFiles(cli
 a message and a callback. The callback is called when an answer was found. 
 The callback of <i>findAnswerInLoadedAIMLFiles</i> should look like this: <i>callback(result, wildCardArray)</i>.
 Result is the <i>answer</i> from the AIML file and <i>wildCardArray</i> stores the values of all wildcardInputs passed previously from the client.	
-<br/>
+<br/><br/>
 <b>Example:</b><br/>
 <pre><code>
 AIMLInterpreter = require('./AIMLInterpreter');
@@ -44,5 +44,5 @@ aimlInterpreter.findAnswerInLoadedAIMLFiles('What is my name?', callback);
 &lt;srai><i>PATTERN TEXT</i>&lt;/srai>
 &lt;sr/>
 &lt;star/>
-&lt;that><i>NAME</i>&lt;/that></pre>
+&lt;that><i>TEXT</i>&lt;/that></pre>
 

@@ -217,7 +217,7 @@ var findCorrectCategory = function(clientInput, domCategories){
                 //return that text
                 text = resolveSpecialNodes(childNodesOfTemplate);
 
-                if(text.match('[\\n|\\t]*[^A-Z|^a-z|^!|^?]*')[0] === ''){
+                if((text.match('[\\n|\\t]*[^A-Z|^a-z|^!|^?]*')[0] === '') && (text.indexOf('function ()') === -1)){
                     return (text);
                 }
             }
@@ -301,7 +301,7 @@ var checkIfMessageMatchesPattern = function(userInput, patternText){
 
     if(matchedString){
         //the matched pattern must be at least as long as the user input or must contain the regex
-        if(matchedString[0].length >= userInput.length || regexPattern.indexOf('[A-Z|0-9|\\s]*[A-Z|0-9|\*|-]*[A-Z|0-9]*[!|.|?|\\s]*') > -1){
+        if(matchedString[0].length >= userInput.length || regexPattern.indexOf('[A-Z|0-9|\\s]*[A-Z|0-9|-]*[A-Z|0-9]*[!|.|?|\\s]*') > -1){
             //if patternText contained a wild card, get the user input that were put into this wild card
             //use original patternText (* is not replaced by regex!)
             var information = getWildCardValue(userInput, patternText);
@@ -366,9 +366,9 @@ var getWildCardValue = function(userInput, patternText){
                 var lastCharOfWildCard = wildCard.charAt(wildCardLastCharIndex);
 
                 try{
-                   //harmonize the wildcard string
-                   //remove first char if it is a space.
-                   //calculate the last index again since the length of the string changed
+                    //harmonize the wildcard string
+                    //remove first char if it is a space.
+                    //calculate the last index again since the length of the string changed
                     if(firstCharOfWildCard === ' '){
                         wildCard = wildCard.splice(0);
                         wildCardLastCharIndex = wildCard.length - 1;
