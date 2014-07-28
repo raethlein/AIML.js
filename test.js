@@ -21,3 +21,4 @@ aimlInterpreter.findAnswerInLoadedAIMLFiles('Test the that tag', callback)
 aimlInterpreter.findAnswerInLoadedAIMLFiles('Test that-tag. match',callback);
 aimlInterpreter.findAnswerInLoadedAIMLFiles('Test that-tag. dont match', callback);
 aimlInterpreter.findAnswerInLoadedAIMLFiles('Test the wildcard pattern!', callback);
+aimlInterpreter.findAnswerInLoadedAIMLFiles('Explain HANA', callback);
