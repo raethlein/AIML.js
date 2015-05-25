@@ -61,6 +61,7 @@ var AIMLInterpreter = function(botAttributesParam){
             wildCardArray = [];
             var result = '';
             for(var i = 0; i < domArray.length; i++){
+                cleanDom(domArray[i].children);
                 result = findCorrectCategory(clientInput, domArray[i].children);
                 if(result){
                     break;
@@ -82,7 +83,27 @@ var AIMLInterpreter = function(botAttributesParam){
             setTimeout(findAnswerInLoadedAIMLFilesWrapper(clientInput, cb), 1000);
         }
     };
-}
+};
+
+var cleanDom = function(childNodes){
+    for(var i = 0; i < childNodes.length; i++){
+        if(childNodes[i].hasOwnProperty('text') & typeof(childNodes[i].text) === 'string'){
+
+            // remove all nodes of type 'text' when they just contain '\r\n'. This indicates line break in the AIML file
+            if(childNodes[i].text.match(/\s*\r\n\s*/gi)){
+                childNodes.splice(i, 1);
+            }
+        }
+    }
+
+
+    // traverse through whole tree by recursive calls
+    for(var j = 0; j < childNodes.length; j++){
+        if(childNodes[j].hasOwnProperty('children')){
+            cleanDom(childNodes[j].children);
+        }
+    }
+};
 
 var findCorrectCategory = function(clientInput, domCategories){
     //indexOfSetTagAmountWithWildCard indicates how many sets with wildcard occur so that those sets store the correct wildcard value
