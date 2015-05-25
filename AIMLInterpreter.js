@@ -69,6 +69,7 @@ var AIMLInterpreter = function(botAttributesParam){
             }
 
             if(result){
+                result = cleanStringFormatCharacters(result);
                 previousAnswer = result;
             }
             cb(result, wildCardArray);
@@ -85,12 +86,21 @@ var AIMLInterpreter = function(botAttributesParam){
     };
 };
 
+// remove string control characters (like line-breaks '\r\n', leading / trailing spaces etc.)
+var cleanStringFormatCharacters = function(str){
+    var cleanedStr = str.replace(/\r\n/gi, '');
+    cleanedStr = cleanedStr.replace(/^\s*/, '');
+    cleanedStr = cleanedStr.replace(/\s*$/,'');
+
+    return cleanedStr;
+}
+
 var cleanDom = function(childNodes){
     for(var i = 0; i < childNodes.length; i++){
         if(childNodes[i].hasOwnProperty('text') & typeof(childNodes[i].text) === 'string'){
 
             // remove all nodes of type 'text' when they just contain '\r\n'. This indicates line break in the AIML file
-            if(childNodes[i].text.match(/\s*\r\n\s*/gi)){
+            if(childNodes[i].text.match(/^\s*\r\n\s*$/gi)){
                 childNodes.splice(i, 1);
             }
         }
@@ -184,6 +194,9 @@ var findCorrectCategory = function(clientInput, domCategories){
                 //traverse as long through the dom until final text was found
                 //final text -> text after special nodes (bot, get, set,...) were resolved
                 return findFinalTextInTemplateNode(childNodesOfTemplate[i].children);
+            }
+            else if(childNodesOfTemplate[i].name === 'condition'){
+                return resolveSpecialNodes(childNodesOfTemplate);
             }
             else if(childNodesOfTemplate[i].name === 'random'){
                 //if random node was found, it's children are 'li' nodes.
@@ -288,12 +301,18 @@ var findCorrectCategory = function(clientInput, domCategories){
             else if(innerNodes[i].name === 'star'){
                 text = text + lastWildCardValue;
             }
+            else if(innerNodes[i].name === 'condition') {
+                if (storedVariableValues[innerNodes[i].attributes.name] === innerNodes[i].attributes.value.toUpperCase()) {
+                    text = text + resolveSpecialNodes(innerNodes[i].children);
+                }
+            }
             else{
                 //normal text (no special tag)
                 text = text + innerNodes[i].text;
             }
         }
 
+        text = cleanStringFormatCharacters(text);
         return text;
     }
 
