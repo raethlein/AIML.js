@@ -44,5 +44,7 @@ aimlInterpreter.findAnswerInLoadedAIMLFiles('What is my name?', callback);
 &lt;srai><i>PATTERN TEXT</i>&lt;/srai>
 &lt;sr/>
 &lt;star/>
-&lt;that><i>TEXT</i>&lt;/that></pre>
+&lt;that><i>TEXT</i>&lt;/that>
+&lt;condition name="<i>NAME</i>" value="<i>VALUE</i>"><i>TEXT</i>&lt;/condition> [supports multi-condition tag definition, see specs for further details]
+</pre>
 
