@@ -1,6 +1,6 @@
 {
   "name": "aimlinterpreter",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "description": "Module to interpret AIML files in node.js",
   "main": "AIMLInterpreter.js",
   "dependencies": {

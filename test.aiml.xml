@@ -13,6 +13,8 @@
     <category><pattern>TEST THE THAT TAG</pattern><template>I start testing that.</template></category>
     <category><pattern>TEST THAT-TAG. MATCH</pattern><that>I start testing that.</that><template>That matched quite well!</template></category>
     <category><pattern>TEST THAT-TAG. DONT MATCH</pattern><that>I found something.</that><template>Sorry, that did not match!</template></category>
+    <category><pattern>HEY <set name='state'>*</set></pattern><template>Hey <get name='state'/>!</template></category>
+    <category><pattern>HOW ARE YOU FEELING TODAY</pattern><template><condition name="state" value="happy">I am happy!</condition><condition name="state" value="sad">I am sad!</condition></template></category>
     <category><pattern>EXPLAIN *</pattern><template>Sorry, I do not have a clue</template></category>
     <category><pattern>*</pattern><template>I found nothing.</template></category>
 </aiml>
