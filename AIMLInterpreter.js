@@ -72,7 +72,7 @@ var AIMLInterpreter = function(botAttributesParam){
                 result = cleanStringFormatCharacters(result);
                 previousAnswer = result;
             }
-            cb(result, wildCardArray);
+            cb(result, wildCardArray, clientInput);
         }
         else{
             var findAnswerInLoadedAIMLFilesWrapper = function(clientInput, cb){
@@ -301,9 +301,43 @@ var findCorrectCategory = function(clientInput, domCategories){
             else if(innerNodes[i].name === 'star'){
                 text = text + lastWildCardValue;
             }
-            else if(innerNodes[i].name === 'condition') {
-                if (storedVariableValues[innerNodes[i].attributes.name] === innerNodes[i].attributes.value.toUpperCase()) {
-                    text = text + resolveSpecialNodes(innerNodes[i].children);
+            else if(innerNodes[i].name === 'condition') {                
+                // condition tag specification: list condition tag
+                if(innerNodes[i].attributes.name === undefined){
+                    if(innerNodes[i].children === undefined){
+                        return undefined;
+                    }
+                    var child;
+                    for(var c in innerNodes[i].children){
+                        child = innerNodes[i].children[c];
+                        if(child.name === 'li'){
+                            if(child.attributes.value == undefined 
+                                || storedVariableValues[child.attributes.name] === child.attributes.value.toUpperCase()){
+                                return findFinalTextInTemplateNode(child.children);
+                            }
+                        }
+                    }
+                } 
+                // condition tag specification: multi condition tag
+                else if(innerNodes[i].attributes.value !== undefined){         
+                    if (storedVariableValues[innerNodes[i].attributes.name] === innerNodes[i].attributes.value.toUpperCase()) {
+                        text = text + resolveSpecialNodes(innerNodes[i].children);
+                    }
+                }
+                // condition tag specification: single name list condition tags
+                else if(innerNodes[i].children !== undefined){
+                    var child;
+                    for(var c in innerNodes[i].children){
+                        child = innerNodes[i].children[c];
+                        if(child.name === 'li'){
+                            if(child.attributes.value === undefined 
+                                || storedVariableValues[innerNodes[i].attributes.name] === child.attributes.value.toUpperCase()){
+                                return findFinalTextInTemplateNode(child.children);
+                            }
+                        }
+                    }
+
+                    return undefined;
                 }
             }
             else{
