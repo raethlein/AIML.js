@@ -19,8 +19,8 @@ This object has a function called <i>loadAIMLFilesIntoArray(fileArray)</i> which
 This function loads the AIML file into memory.<br/>
 Furthermore, the object has a function called <i>findAnswerInLoadedAIMLFiles(clientInput, cb)</i> which receives 
 a message and a callback. The callback is called when an answer was found. 
-The callback of <i>findAnswerInLoadedAIMLFiles</i> should look like this: <i>callback(result, wildCardArray)</i>.
-Result is the <i>answer</i> from the AIML file and <i>wildCardArray</i> stores the values of all wildcardInputs passed previously from the client.	
+The callback of <i>findAnswerInLoadedAIMLFiles</i> should look like this: <i>callback(result, wildCardArray, input)</i>.
+<i>Result</i> is the answer from the AIML file and <i>wildCardArray</i> stores the values of all wildcardInputs passed previously from the client. The original input which triggered the answer is given back via <i>input</i>.	
 <br/><br/>
 <b>Example:</b><br/>
 <pre><code>
@@ -28,8 +28,8 @@ AIMLInterpreter = require('./AIMLInterpreter');
 var aimlInterpreter = new AIMLInterpreter({name:'WireInterpreter', age:'42'});
 aimlInterpreter.loadAIMLFilesIntoArray(['./test.aiml.xml']);
 
-var callback = function(answer, wildCardArray){
-    console.log(answer + ' | ' + wildCardArray);
+var callback = function(answer, wildCardArray, input){
+    console.log(answer + ' | ' + wildCardArray + ' | ' + input);
 };
 
 aimlInterpreter.findAnswerInLoadedAIMLFiles('What is your name?', callback);
@@ -46,5 +46,6 @@ aimlInterpreter.findAnswerInLoadedAIMLFiles('What is my name?', callback);
 &lt;star/>
 &lt;that><i>TEXT</i>&lt;/that>
 &lt;condition name="<i>NAME</i>" value="<i>VALUE</i>"><i>TEXT</i>&lt;/condition>
+&lt;condition>&lt;li name="<i>NAME</i>" value="<i>VALUE</i>"><i>TEXT</i>&lt;/li>&lt;li name="<i>NAME</i>" value="<i>VALUE</i>"><i>TEXT</i>&lt;/li>&lt;li><i>TEXT</i>&lt;/li>&lt;/condition>
+&lt;condition  name="<i>NAME</i>">&lt;livalue="<i>VALUE</i>"><i>TEXT</i>&lt;/li>&lt;li value="<i>VALUE</i>"><i>TEXT</i>&lt;/li>&lt;li><i>TEXT</i>&lt;/li>&lt;/condition>
 </pre>
-
