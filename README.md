@@ -47,5 +47,5 @@ aimlInterpreter.findAnswerInLoadedAIMLFiles('What is my name?', callback);
 &lt;that><i>TEXT</i>&lt;/that>
 &lt;condition name="<i>NAME</i>" value="<i>VALUE</i>"><i>TEXT</i>&lt;/condition>
 &lt;condition>&lt;li name="<i>NAME</i>" value="<i>VALUE</i>"><i>TEXT</i>&lt;/li>&lt;li name="<i>NAME</i>" value="<i>VALUE</i>"><i>TEXT</i>&lt;/li>&lt;li><i>TEXT</i>&lt;/li>&lt;/condition>
-&lt;condition  name="<i>NAME</i>">&lt;livalue="<i>VALUE</i>"><i>TEXT</i>&lt;/li>&lt;li value="<i>VALUE</i>"><i>TEXT</i>&lt;/li>&lt;li><i>TEXT</i>&lt;/li>&lt;/condition>
+&lt;condition name="<i>NAME</i>">&lt;li value="<i>VALUE</i>"><i>TEXT</i>&lt;/li>&lt;li value="<i>VALUE</i>"><i>TEXT</i>&lt;/li>&lt;li><i>TEXT</i>&lt;/li>&lt;/condition>
 </pre>
