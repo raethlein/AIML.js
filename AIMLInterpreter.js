@@ -206,7 +206,7 @@ var findCorrectCategory = function(clientInput, domCategories){
             }
             else if(childNodesOfTemplate[i].name === 'srai'){
                 //take pattern text of srai node to get answer of another category
-                var sraiText = '' + childNodesOfTemplate[i].children[0].text;
+                var sraiText = '' + findFinalTextInTemplateNode(childNodesOfTemplate[i].children);
                 sraiText = sraiText.toUpperCase();
                 var referredPatternText = sraiText;
                 //call findCorrectCategory again to find the category that belongs to the srai node
@@ -250,7 +250,6 @@ var findCorrectCategory = function(clientInput, domCategories){
                 //after all special functions (bot, get, set,...) were resolved
                 //return that text
                 text = resolveSpecialNodes(childNodesOfTemplate);
-
                 if((text.match('[\\n|\\t]*[^A-Z|^a-z|^!|^?]*')[0] === '') && (text.indexOf('function ()') === -1)){
                     return (text);
                 }
@@ -464,13 +463,16 @@ var getWildCardValue = function(userInput, patternText){
                 }
                 wildCardArray[wildCardArrayIndex] = wildCard;
                 wildCardArrayIndex++;
-
-                if(!wildCardInput[i+1]){
-                    lastWildCardValue = wildCardArray[wildCardArrayIndex-1];
-                }
+                // if(!wildCardInput[i+1]){
+                //     lastWildCardValue = wildCardArray[wildCardArrayIndex-1];
+                // }
             }
         }
     }
+    if(wildCardArray.length - 1 >= 0){
+        lastWildCardValue = wildCardArray[wildCardArray.length - 1];
+    }
+
     return wildCardArray;
 }
 
