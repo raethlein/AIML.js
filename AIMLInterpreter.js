@@ -463,9 +463,6 @@ var getWildCardValue = function(userInput, patternText){
                 }
                 wildCardArray[wildCardArrayIndex] = wildCard;
                 wildCardArrayIndex++;
-                // if(!wildCardInput[i+1]){
-                //     lastWildCardValue = wildCardArray[wildCardArrayIndex-1];
-                // }
             }
         }
     }
