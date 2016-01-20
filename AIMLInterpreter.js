@@ -14,6 +14,7 @@ var isAIMLFileLoadingStarted = false;
 var isAIMLFileLoaded = false;
 
 var previousAnswer = '';
+var previousThinkTag = false;
 
 //botAttributes contain things like name, age, master, gender...
 var AIMLInterpreter = function(botAttributesParam){
@@ -84,7 +85,15 @@ var AIMLInterpreter = function(botAttributesParam){
             setTimeout(findAnswerInLoadedAIMLFilesWrapper(clientInput, cb), 1000);
         }
     };
+    //restart the DOM in order to load a new AIML File
+    this.restartDom = function(){
+        domArray=[];
+        domIndex=0;
+    };
 };
+
+
+
 
 // remove string control characters (like line-breaks '\r\n', leading / trailing spaces etc.)
 var cleanStringFormatCharacters = function(str){
@@ -189,6 +198,7 @@ var findCorrectCategory = function(clientInput, domCategories){
 
         //traverse through template nodes until final text is found
         //return it then to very beginning
+       
         for(var i = 0; i < childNodesOfTemplate.length; i++){
             if(childNodesOfTemplate[i].name === 'template'){
                 //traverse as long through the dom until final text was found
@@ -199,10 +209,8 @@ var findCorrectCategory = function(clientInput, domCategories){
                 return resolveSpecialNodes(childNodesOfTemplate);
             }
             else if(childNodesOfTemplate[i].name === 'random'){
-                //if random node was found, it's children are 'li' nodes.
-                //pick one li node by random and continue dom traversion until final text is found
-                var randomNumber = Math.floor(Math.random() * (childNodesOfTemplate[i].children.length));
-                return findFinalTextInTemplateNode([childNodesOfTemplate[i].children[randomNumber]]);
+                //if random node was found, its children are 'li' nodes.
+                return resolveSpecialNodes(childNodesOfTemplate);
             }
             else if(childNodesOfTemplate[i].name === 'srai'){
                 //take pattern text of srai node to get answer of another category
@@ -216,11 +224,19 @@ var findCorrectCategory = function(clientInput, domCategories){
             else if(childNodesOfTemplate[i].name === 'li'){
                 return findFinalTextInTemplateNode(childNodesOfTemplate[i].children);
             }
+            else if(childNodesOfTemplate[i].name === 'br'){
+                //br elements are used for putting '\n' into the text
+                return resolveSpecialNodes(childNodesOfTemplate);
+            }
             else if(childNodesOfTemplate[i].name === 'pattern'){
                 //(here it is already checked that this is the right pattern that matches the user input)
                 //make use of the functions of the special nodes - bot, set, get...
                 resolveSpecialNodes(childNodesOfTemplate[i].children);
                 continue;
+            }
+            else if(childNodesOfTemplate[i].name === 'think'){
+                text = resolveSpecialNodes(childNodesOfTemplate);
+                return text;
             }
             else if(childNodesOfTemplate[i].name === 'bot'){
                 text = resolveSpecialNodes(childNodesOfTemplate);
@@ -268,20 +284,45 @@ var findCorrectCategory = function(clientInput, domCategories){
             }
             else if(innerNodes[i].name === 'get'){
                 //replace get tag by belonging variable value
-                text = text + storedVariableValues[innerNodes[i].attributes.name];
+                var getAux = storedVariableValues[innerNodes[i].attributes.name];
+                if(getAux === undefined){
+                    text = text + '';
+                }else{
+                    text = text + getAux;
+                }
             }
             else if(innerNodes[i].name === 'set'){
                 //store value of set tag text into variable (variable name = attribute of set tag)
                 //replace than set tag by the text value
-
-                if(innerNodes[i].children[0].text === '*'){
+                var aux='';
+                if(innerNodes[i].children[0].name === 'star'){
+                    aux = resolveSpecialNodes(innerNodes[i].children);
+                    storedVariableValues[innerNodes[i].attributes.name] = aux;
+                    if(!previousThinkTag){
+                        text = text + aux;
+                    }
+                }
+                else if(innerNodes[i].children[0].text === '*'){
                     //the first set-Tag with wildCard gets the first wildCardValue, the second set-Tag with wildCard gets the second wildCardValue etc.
                     storedVariableValues[innerNodes[i].attributes.name] = wildCardArray[indexOfSetTagAmountWithWildCard];
                     indexOfSetTagAmountWithWildCard++;
                 }else{
                     storedVariableValues[innerNodes[i].attributes.name] = innerNodes[i].children[0].text;
                 }
-//                text = text + innerNodes[i].children[0].text;
+
+                //If this set tag is a think tag's child
+                if(previousThinkTag){
+                    previousThinkTag=false;
+                    text= text + '';
+                }else{
+                    text = text + resolveSpecialNodes(innerNodes[i].children);
+                }
+            }
+            else if(innerNodes[i].name === 'br'){
+                text = text + '\n';
+            }
+            else if(innerNodes[i].name === 'think'){
+                previousThinkTag=true;
                 text = text + resolveSpecialNodes(innerNodes[i].children);
             }
             else if(innerNodes[i].name === 'sr'){
@@ -297,8 +338,22 @@ var findCorrectCategory = function(clientInput, domCategories){
                     }
                 }
             }
+            else if(innerNodes[i].name === 'random'){
+                //Get a random number and find the li tag chosen
+                var randomNumber = Math.floor(Math.random() * (innerNodes[i].children.length));
+                text = text + findFinalTextInTemplateNode([innerNodes[i].children[randomNumber]]);
+            ;
+            }
             else if(innerNodes[i].name === 'star'){
                 text = text + lastWildCardValue;
+            }
+            else if(innerNodes[i].name === 'srai'){
+                //take pattern text of srai node to get answer of another category
+                var sraiText = '' + findFinalTextInTemplateNode(innerNodes[i].children);
+                sraiText = sraiText.toUpperCase();
+                var referredPatternText = sraiText;
+                //call findCorrectCategory again to find the category that belongs to the srai node
+                text = text + findCorrectCategory(referredPatternText, domCategories);
             }
             else if(innerNodes[i].name === 'condition') {                
                 // condition tag specification: list condition tag
@@ -331,7 +386,7 @@ var findCorrectCategory = function(clientInput, domCategories){
                         if(child.name === 'li'){
                             if(child.attributes.value === undefined 
                                 || storedVariableValues[innerNodes[i].attributes.name] === child.attributes.value.toUpperCase()){
-                                return findFinalTextInTemplateNode(child.children);
+                                return resolveSpecialNodes(child.children);
                             }
                         }
                     }
@@ -339,7 +394,7 @@ var findCorrectCategory = function(clientInput, domCategories){
                     return undefined;
                 }
             }
-            else{
+            else if(innerNodes[i].name === undefined){
                 //normal text (no special tag)
                 text = text + innerNodes[i].text;
             }

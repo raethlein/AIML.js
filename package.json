@@ -1,27 +1,78 @@
 {
-  "name": "aimlinterpreter",
-  "version": "0.1.7",
-  "description": "Module to interpret AIML files in node.js",
-  "main": "AIMLInterpreter.js",
+  "READ ME": "README.md",
+  "_args": [
+    [
+      "aimlinterpreter",
+      "/home/sergio/Documentos/PFG/SERGIOBOT"
+    ]
+  ],
+  "_from": "aimlinterpreter@*",
+  "_id": "aimlinterpreter@0.1.7",
+  "_inCache": true,
+  "_location": "/aimlinterpreter",
+  "_npmUser": {
+    "email": "bennyra92@gmail.com",
+    "name": "b3nra"
+  },
+  "_npmVersion": "1.4.28",
+  "_phantomChildren": {},
+  "_requested": {
+    "name": "aimlinterpreter",
+    "raw": "aimlinterpreter",
+    "rawSpec": "",
+    "scope": null,
+    "spec": "*",
+    "type": "range"
+  },
+  "_requiredBy": [
+    "#USER"
+  ],
+  "_resolved": "https://registry.npmjs.org/aimlinterpreter/-/aimlinterpreter-0.1.7.tgz",
+  "_shasum": "988c1b6b135a8099b3d1144832ad89691d1b7cf6",
+  "_shrinkwrap": null,
+  "_spec": "aimlinterpreter",
+  "_where": "/home/sergio/Documentos/PFG/SERGIOBOT",
+  "author": {
+    "name": "B3nRa"
+  },
+  "bugs": {
+    "url": "https://github.com/raethlein/AIML.js/issues"
+  },
   "dependencies": {
     "dom-js": "~0.0.9"
   },
+  "description": "Module to interpret AIML files in node.js",
   "devDependencies": {},
+  "directories": {},
+  "dist": {
+    "shasum": "988c1b6b135a8099b3d1144832ad89691d1b7cf6",
+    "tarball": "http://registry.npmjs.org/aimlinterpreter/-/aimlinterpreter-0.1.7.tgz"
+  },
+  "gitHead": "1497b828dfa61cfc8555b935ca40f9dad60c0125",
+  "homepage": "https://github.com/raethlein/AIML.js",
+  "installable": true,
+  "keywords": [
+    "ai",
+    "aiml",
+    "bot",
+    "interpreter"
+  ],
+  "license": "BSD",
+  "main": "AIMLInterpreter.js",
+  "maintainers": [
+    {
+      "name": "Benjamin Raethlein",
+      "email": "benjamin.raethlein@gmail.com"
+    }
+  ],
+  "name": "aimlinterpreter",
+  "optionalDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/raethlein/AIML.js.git"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/B3nRa/AIML.js.git"
-  },
-  "keywords": [
-    "aiml",
-    "ai",
-    "interpreter",
-    "bot"
-  ],
-  "author": "B3nRa",
-  "license": "BSD",
-  "bugs": {
-    "url": "https://github.com/B3nRa/AIML.js/issues"
-  }, "READ ME": "README.md"}
+  "version": "0.1.7"
+}

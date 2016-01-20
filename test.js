@@ -30,7 +30,6 @@ aimlInterpreter.findAnswerInLoadedAIMLFiles('Test sr in random', callback);
 // Test star tag
 aimlInterpreter.findAnswerInLoadedAIMLFiles('Test the star tag', callback);
 
-
 // Test that tag
 aimlInterpreter.findAnswerInLoadedAIMLFiles('Test the that tag', callback)
 aimlInterpreter.findAnswerInLoadedAIMLFiles('Test that-tag. match',callback);
@@ -53,6 +52,18 @@ aimlInterpreter.findAnswerInLoadedAIMLFiles('Tell me about your feelings', callb
 
 // Test wildcards
 aimlInterpreter.findAnswerInLoadedAIMLFiles('Explain HANA', callback);
+
+//Test Think tag
+aimlInterpreter.findAnswerInLoadedAIMLFiles('I am 123', callback);
+aimlInterpreter.findAnswerInLoadedAIMLFiles('How old am I?', callback);
+aimlInterpreter.findAnswerInLoadedAIMLFiles('What do you know about me?', callback);
+
+//Test condition and srai
+aimlInterpreter.findAnswerInLoadedAIMLFiles('Test condition and srai', callback);
+aimlInterpreter.findAnswerInLoadedAIMLFiles("You feel happy", callback);
+aimlInterpreter.findAnswerInLoadedAIMLFiles('Test condition and srai', callback);
+aimlInterpreter.findAnswerInLoadedAIMLFiles("You feel crumpy", callback);
+aimlInterpreter.findAnswerInLoadedAIMLFiles('Test condition and srai', callback);
 
 // Test finding nothing
 aimlInterpreter.findAnswerInLoadedAIMLFiles('Test the wildcard pattern!', callback);

@@ -1,22 +1,29 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <aiml>
+    
     <category><pattern>WHAT IS YOUR NAME</pattern><template>My name is <bot name='name'/>.</template></category>
     <category><pattern>MY NAME IS <set name='clientName'>*</set></pattern><template>Hey <get name='clientName'/>!</template></category>
+    <category><pattern>MY NAME IS <set name='clientName'>*</set></pattern><template><get name='clientName'/> <random><li>Hey</li><li>Hi</li><li>Hello</li></random> !</template></category>
     <category><pattern>WHAT IS MY NAME</pattern><template>Your name is <get name='clientName'/></template></category>
     <category><pattern>WHO ARE YOU</pattern><template><srai>WHAT IS YOUR NAME</srai></template></category>
     <category><pattern>GIVE ME A LETTER</pattern><template><random><li>A</li><li>B</li><li>C</li></random></template></category>
 	<category><pattern>TEST SRAI IN RANDOM</pattern><template><random><li><srai>WHAT IS YOUR NAME</srai></li><li><srai>WHAT IS MY NAME</srai></li></random></template></category>
 	<category><pattern>TEST WILDCARD *</pattern><template>Thanks for testing!</template></category>
 	<category><pattern>TEST SR TAG</pattern><template><sr/></template></category>
-	<category><pattern>TEST SR IN RANDOM</pattern><template><random><li><sr/></li></random></template></category>
+	<category><pattern>TEST SR IN RANDOM</pattern><template><random><li><sr/></li><li><srai>WHAT IS YOUR NAME</srai></li></random></template></category>
     <category><pattern>TEST THE STAR TAG</pattern><template><star/></template></category>
     <category><pattern>TEST THE THAT TAG</pattern><template>I start testing that.</template></category>
     <category><pattern>TEST THAT-TAG. MATCH</pattern><that>I start testing that.</that><template>That matched quite well!</template></category>
     <category><pattern>TEST THAT-TAG. DONT MATCH</pattern><that>I found something.</that><template>Sorry, that did not match!</template></category>
     <category><pattern>YOU FEEL <set name='state'>*</set></pattern><template>I feel <get name='state'/>!</template></category>
-    <category><pattern>HOW ARE YOU FEELING TODAY</pattern><template><condition name='state' value='happy'>I am happy!</condition><condition name='state' value='sad'>I am sad!</condition></template></category>
-    <category><pattern>TELL ME ABOUT YOUR FEELINGS</pattern><template><condition><li name='state' value='happy'>I am happy!</li><li name='state' value='sad'>I am sad!</li><li>I kinda feel nothing</li></condition></template></category>
-    <category><pattern>WHAT IS YOUR FEELING TODAY</pattern><template><condition name='state'><li value='happy'>Feeling happy!</li><li value='sad'>Feeling sad today</li><li>I don't feel anything</li></condition></template></category>
+    <category><pattern>HOW ARE YOU FEELING TODAY</pattern><template><condition name='state' value='happy'>I am happy!</condition><condition name='state' value='sad'>I am sad! </condition></template></category>
+    <category><pattern>TELL ME ABOUT YOUR FEELINGS</pattern><template><condition><li name='state' value='happy'>I am happy!</li><li name='state' value='sad'>I am sad!</li><li>I kinda feel nothing <srai>WHAT IS YOUR NAME</srai></li></condition></template></category>
+    <category><pattern>WHAT IS YOUR FEELING TODAY</pattern><template><condition name='state'><li value='happy'>Feeling happy! </li><li value='sad'>Feeling sad today </li><li>I don't feel anything </li></condition></template></category>
     <category><pattern>EXPLAIN *</pattern><template>Sorry, I do not have a clue</template></category>
+    <category><pattern>I AM *</pattern><template>Text before random<random><li><think><set name='clientAge'><star/></set></think></li><li><think><set name='clientAge'>22</set></think></li></random> Text after random</template></category>
+    <category><pattern>HOW OLD AM I</pattern><template>You are <get name='clientAge'/></template></category>
+    <category><pattern>WHAT DO YOU KNOW ABOUT ME</pattern><template>Your name is <get name='clientName'/> and you are <get name='clientAge'/></template></category>
+    <category><pattern>TEST CONDITION AND SRAI</pattern><template><condition name='state'><li value='happy'>Feeling happy! <srai>WHAT IS YOUR NAME</srai></li><li value='sad'>Feeling sad today <srai>WHAT IS MY NAME</srai></li><li>I don't feel anything <srai>HOW OLD AM I</srai></li></condition></template></category>
     <category><pattern>*</pattern><template>I found nothing.</template></category>
+    
 </aiml>
