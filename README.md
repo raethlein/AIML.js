@@ -48,6 +48,14 @@ aimlInterpreter.findAnswerInLoadedAIMLFiles('What is my name?', callback);
 &lt;condition name="<i>NAME</i>" value="<i>VALUE</i>"><i>TEXT</i>&lt;/condition>
 &lt;condition>&lt;li name="<i>NAME</i>" value="<i>VALUE</i>"><i>TEXT</i>&lt;/li>&lt;li name="<i>NAME</i>" value="<i>VALUE</i>"><i>TEXT</i>&lt;/li>&lt;li><i>TEXT</i>&lt;/li>&lt;/condition>
 &lt;condition name="<i>NAME</i>">&lt;li value="<i>VALUE</i>"><i>TEXT</i>&lt;/li>&lt;li value="<i>VALUE</i>"><i>TEXT</i>&lt;/li>&lt;li><i>TEXT</i>&lt;/li>&lt;/condition>
+
+&lt;think>&lt;set name="<i>NAME</i>">TEXT&lt;/set>&lt;/think>
+&lt;anyElement/>&lt;random>&lt;li><i>A</i>&lt;/li>&lt;li><i>B</i>&lt;/li>&lt;li><i>C</i>&lt;/li>&lt;/random>&lt;anyElement/>
+&lt;random>&lt;li>&lt;think>&lt;set name="<i>NAME</i>">TEXT&lt;/set>&lt;/think>&lt;/li>&lt;li><i>B</i>&lt;/li>&lt;/random>
+&lt;random>&lt;li>&lt;srai><i>PATTERN TEXT</i>&lt;/srai>&lt;/li>&lt;li><i>B</i>&lt;/li>&lt;/random>
+&lt;condition name="<i>NAME</i>" value="<i>VALUE</i>">&lt;srai><i>PATTERN TEXT</i>&lt;/srai>&lt;/condition>
+&lt;condition>&lt;li name="<i>NAME</i>" value="<i>VALUE</i>">&lt;srai><i>PATTERN TEXT</i>&lt;/srai>&lt;/li>&lt;li name="<i>NAME</i>" value="<i>VALUE</i>"><i>TEXT</i>&lt;/li>&lt;/condition>
+&lt;condition name="<i>NAME</i>">&lt;li value="<i>VALUE</i>">&lt;srai><i>PATTERN TEXT</i>&lt;/srai>&lt;/li>&lt;li value="<i>VALUE</i>"><i>TEXT</i>&lt;/li>&lt;/condition>
 </pre>
 
 <br/>
