@@ -7,6 +7,15 @@ var callback = function(answer, wildCardArray, input){
     console.log(answer + ' | ' + wildCardArray + ' | ' + input);
 };
 
+var caseCallback = function(answer, wildCardArray, input){
+  if (answer == this) {
+    console.log(answer + ' | ' + wildCardArray + ' | ' + input);
+  } else {
+    console.log('ERROR:', answer);
+    console.log('   Expected:', this.toString());
+  }
+};
+
 
 // Test bot attributes
 aimlInterpreter.findAnswerInLoadedAIMLFiles('What is your name?', callback);
@@ -67,3 +76,9 @@ aimlInterpreter.findAnswerInLoadedAIMLFiles('Test condition and srai', callback)
 
 // Test finding nothing
 aimlInterpreter.findAnswerInLoadedAIMLFiles('Test the wildcard pattern!', callback);
+
+// Case insensitive testing
+aimlInterpreter.findAnswerInLoadedAIMLFiles('You feel BAD', caseCallback.bind('I feel BAD!'));
+aimlInterpreter.findAnswerInLoadedAIMLFiles('You feel good', caseCallback.bind('I feel good!'));
+aimlInterpreter.findAnswerInLoadedAIMLFiles('You feel hAPPy', caseCallback.bind('I feel HAPPy!')); // INTENTIONAL ERROR CHECKING
+aimlInterpreter.findAnswerInLoadedAIMLFiles('You feel FINEeeeee', caseCallback.bind('I feel FINEEEEEE!')); // INTENTIONAL ERROR CHECKING
