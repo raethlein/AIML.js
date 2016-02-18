@@ -58,7 +58,6 @@ var AIMLInterpreter = function(botAttributesParam){
     this.findAnswerInLoadedAIMLFiles = function(clientInput, cb){
         //check if all AIML files have been loaded. If not, call this method again after a delay
         if(isAIMLFileLoaded){
-            clientInput = clientInput.toUpperCase();
             wildCardArray = [];
             var result = '';
             for(var i = 0; i < domArray.length; i++){
@@ -425,7 +424,7 @@ var checkIfMessageMatchesPattern = function(userInput, patternText){
 
     //match userInput with the regex pattern
     //if it matches, matchedString is defined
-    var matchedString = userInput.match(regexPattern);
+    var matchedString = userInput.toUpperCase().match(regexPattern);
 
     if(matchedString){
         //the matched pattern must be at least as long as the user input or must contain the regex
@@ -476,7 +475,7 @@ var getWildCardValue = function(userInput, patternText){
     if(replaceArray.length > 1){
         //replace the string of the userInput which is fixed by the pattern
         for(var i = 0; i < replaceArray.length; i++){
-            wildCardInput = wildCardInput.replace(replaceArray[i], '|');
+            wildCardInput = wildCardInput.replace(new RegExp(replaceArray[i], 'i'), '|');
         }
         //split the wildCardInput string by | to differentiate multiple * inputs
         //e.g. userInput = WHAT IS THE RELATION BETWEEN TIM AND STRUPPI?
