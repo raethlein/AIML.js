@@ -197,7 +197,7 @@ var findCorrectCategory = function(clientInput, domCategories){
 
         //traverse through template nodes until final text is found
         //return it then to very beginning
-       
+
         for(var i = 0; i < childNodesOfTemplate.length; i++){
             if(childNodesOfTemplate[i].name === 'template'){
                 //traverse as long through the dom until final text was found
@@ -265,7 +265,7 @@ var findCorrectCategory = function(clientInput, domCategories){
                 //after all special functions (bot, get, set,...) were resolved
                 //return that text
                 text = resolveSpecialNodes(childNodesOfTemplate);
-                if((text.match('[\\n|\\t]*[^A-Z|^a-z|^!|^?]*')[0] === '') && (text.indexOf('function ()') === -1)){
+                if((text.match('[\\n|\\t]*[^A-Z|^a-z|^1-9|^!|^?]*')[0] === '') && (text.indexOf('function ()') === -1)){
                     return (text);
                 }
             }
@@ -354,7 +354,7 @@ var findCorrectCategory = function(clientInput, domCategories){
                 //call findCorrectCategory again to find the category that belongs to the srai node
                 text = text + findCorrectCategory(referredPatternText, domCategories);
             }
-            else if(innerNodes[i].name === 'condition') {                
+            else if(innerNodes[i].name === 'condition') {
                 // condition tag specification: list condition tag
                 if(innerNodes[i].attributes.name === undefined){
                     if(innerNodes[i].children === undefined){
@@ -364,15 +364,15 @@ var findCorrectCategory = function(clientInput, domCategories){
                     for(var c in innerNodes[i].children){
                         child = innerNodes[i].children[c];
                         if(child.name === 'li'){
-                            if(child.attributes.value == undefined 
+                            if(child.attributes.value == undefined
                                 || storedVariableValues[child.attributes.name] === child.attributes.value.toUpperCase()){
                                 return findFinalTextInTemplateNode(child.children);
                             }
                         }
                     }
-                } 
+                }
                 // condition tag specification: multi condition tag
-                else if(innerNodes[i].attributes.value !== undefined){         
+                else if(innerNodes[i].attributes.value !== undefined){
                     if (storedVariableValues[innerNodes[i].attributes.name] === innerNodes[i].attributes.value.toUpperCase()) {
                         text = text + resolveSpecialNodes(innerNodes[i].children);
                     }
@@ -383,7 +383,7 @@ var findCorrectCategory = function(clientInput, domCategories){
                     for(var c in innerNodes[i].children){
                         child = innerNodes[i].children[c];
                         if(child.name === 'li'){
-                            if(child.attributes.value === undefined 
+                            if(child.attributes.value === undefined
                                 || storedVariableValues[innerNodes[i].attributes.name] === child.attributes.value.toUpperCase()){
                                 return resolveSpecialNodes(child.children);
                             }
