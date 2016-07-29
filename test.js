@@ -31,13 +31,14 @@ aimlInterpreter.findAnswerInLoadedAIMLFiles('Who are you?', callback);
 aimlInterpreter.findAnswerInLoadedAIMLFiles('Give me a letter.', callback);
 aimlInterpreter.findAnswerInLoadedAIMLFiles('Test srai in random.', callback);
 aimlInterpreter.findAnswerInLoadedAIMLFiles('Test wildcard What is my name?', callback);
+aimlInterpreter.findAnswerInLoadedAIMLFiles('Test multiple beautiful wildcards you are', callback);
 
 // Test sr tag
-aimlInterpreter.findAnswerInLoadedAIMLFiles('Test sr tag', callback);
-aimlInterpreter.findAnswerInLoadedAIMLFiles('Test sr in random', callback);
+aimlInterpreter.findAnswerInLoadedAIMLFiles('Test sr tag What is my name?', callback);
+aimlInterpreter.findAnswerInLoadedAIMLFiles('Test sr in random What is my name?', callback);
 
 // Test star tag
-aimlInterpreter.findAnswerInLoadedAIMLFiles('Test the star tag', callback);
+aimlInterpreter.findAnswerInLoadedAIMLFiles('Test the star tag repeat what I said', callback);
 
 // Test that tag
 aimlInterpreter.findAnswerInLoadedAIMLFiles('Test the that tag', callback)
