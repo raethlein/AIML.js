@@ -32,6 +32,8 @@ var AIMLInterpreter = function(botAttributesParam){
 
                 fileIndex++;
 
+                data = data.replace(/>\r*\n+\s*</gi,'><');
+
                 new DomJS().parse(data, function(err, dom) {
                     var topCategories, topics;
                     if (err) {
@@ -59,6 +61,7 @@ var AIMLInterpreter = function(botAttributesParam){
         //check if all AIML files have been loaded. If not, call this method again after a delay
         if(isAIMLFileLoaded){
             wildCardArray = [];
+            lastWildCardValue = '';
             var result = '';
             for(var i = 0; i < domArray.length; i++){
                 cleanDom(domArray[i].children);
@@ -344,7 +347,12 @@ var findCorrectCategory = function(clientInput, domCategories){
             ;
             }
             else if(innerNodes[i].name === 'star'){
-                text = text + lastWildCardValue;
+              if(innerNodes[i].attributes && innerNodes[i].attributes.index && innerNodes[i].attributes.index < wildCardArray.length){
+                text = text + wildCardArray[innerNodes[i].attributes.index-1];
+              }
+              else {
+                text = text + wildCardArray[0];
+              }
             }
             else if(innerNodes[i].name === 'srai'){
                 //take pattern text of srai node to get answer of another category
@@ -528,4 +536,3 @@ var getWildCardValue = function(userInput, patternText){
 }
 
 module.exports = AIMLInterpreter;
-
