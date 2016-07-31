@@ -347,7 +347,7 @@ var findCorrectCategory = function(clientInput, domCategories){
             ;
             }
             else if(innerNodes[i].name === 'star'){
-              if(innerNodes[i].attributes && innerNodes[i].attributes.index && innerNodes[i].attributes.index < wildCardArray.length){
+              if(innerNodes[i].attributes && innerNodes[i].attributes.index && innerNodes[i].attributes.index <= wildCardArray.length){
                 text = text + wildCardArray[innerNodes[i].attributes.index-1];
               }
               else {
