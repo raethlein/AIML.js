@@ -32,6 +32,8 @@ var AIMLInterpreter = function(botAttributesParam){
 
                 fileIndex++;
 
+                data = data.replace(/>\r*\n+\s*</gi,'><');
+
                 new DomJS().parse(data, function(err, dom) {
                     var topCategories, topics;
                     if (err) {
