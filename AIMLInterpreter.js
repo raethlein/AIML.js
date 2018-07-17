@@ -268,8 +268,11 @@ var findCorrectCategory = function(clientInput, domCategories){
                 //after all special functions (bot, get, set,...) were resolved
                 //return that text
                 text = resolveSpecialNodes(childNodesOfTemplate);
-                if((text.match('[\\n|\\t]*[^A-Z|^a-z|^1-9|^!|^?]*')[0] === '') && (text.indexOf('function ()') === -1)){
-                    return (text);
+                //if((text.match('[\\n|\\t]*[^A-Z|^a-z|^1-9|^!|^?]*')[0] === '') && (text.indexOf('function ()') === -1)){
+                    //return (text);
+                //}
+                if(text.indexOf('function ()') === -1){
+                    return text;
                 }
             }
         }
